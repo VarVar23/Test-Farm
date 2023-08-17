@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 [Serializable]
 public class ItemMenu
 {
+    public float ItemTimeAction;
     public Sprite ItemSprite;
     public Action ItemAction;
 

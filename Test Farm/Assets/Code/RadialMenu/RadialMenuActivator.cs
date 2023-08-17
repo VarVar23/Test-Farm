@@ -11,9 +11,11 @@ public class RadialMenuActivator : MonoBehaviour
         _radialMenuCreate = radialMenuCreate;
     }
 
-    public void Active(RadialMenuSO radialMenuSO)
+
+    public void Active(RadialMenuSO radialMenuSO, Transform activeObjectTransform)
     {
         _radialMenuView.RadialMenuObject.SetActive(true);
+        _radialMenuView.RadialMenuImageTransform.position = activeObjectTransform.position;
         _radialMenuCreate.Create(radialMenuSO);
     }
 

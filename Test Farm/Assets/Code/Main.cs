@@ -3,10 +3,10 @@ using UnityEngine;
 public class Main : MonoBehaviour
 {
     #region View
-
     [SerializeField] private RadialMenuView _radialMenuView;
     [SerializeField] private ClickTreeView _clickTreeView;
     [SerializeField] private ClickGardenView _clickGardenView;
+    [SerializeField] private AnimationItemMenuMoveView _animationItemMenuMoveView;
 
     #endregion
 
@@ -15,14 +15,17 @@ public class Main : MonoBehaviour
 
     private RadialMenuCreate _radialMenuCreate;
     private RadialMenuActivator _radialMenuActivator;
+    private RadialMenuItemClick _radialMenuItemClick;
     private ClickMenuController _clickMenuController;
+    private AnimationRadialItem _animationRadialItem;
+
 
     #endregion
 
 
     #region Model
 
-    [SerializeField] private RadialMenuSO _radialMenuSO;
+    [SerializeField] private AnimationRadialItemSO _animationRadialItemSO;
 
     #endregion
 
@@ -47,8 +50,11 @@ public class Main : MonoBehaviour
 
     private void ControllersInitialize()
     {
-        _radialMenuCreate = new RadialMenuCreate(_radialMenuView);
+        _animationRadialItem = new AnimationRadialItem(_animationRadialItemSO);
+        _radialMenuItemClick = new RadialMenuItemClick(_animationItemMenuMoveView.MoveImage, _animationRadialItem);
+        _radialMenuCreate = new RadialMenuCreate(_radialMenuView, _radialMenuItemClick);
         _radialMenuActivator = new RadialMenuActivator(_radialMenuView, _radialMenuCreate);
-        _clickMenuController = new ClickMenuController(_iClickMenu, _radialMenuActivator, _radialMenuView);
+
+        _clickMenuController = new ClickMenuController(_iClickMenu, _radialMenuActivator, _radialMenuView, _radialMenuItemClick);
     }
 }

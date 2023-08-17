@@ -7,11 +7,13 @@ public class RadialMenuCreate
     public List<GameObject> Items => _items;
 
     private RadialMenuView _radialMenuView;
+    private RadialMenuItemClick _radialMenuItemClick;
     private List<GameObject> _items;
 
-    public RadialMenuCreate(RadialMenuView radialMenuView)
+    public RadialMenuCreate(RadialMenuView radialMenuView, RadialMenuItemClick radialMenuItemClick)
     {
         _radialMenuView = radialMenuView;
+        _radialMenuItemClick = radialMenuItemClick;
         _items = new List<GameObject>();
     }
 
@@ -22,9 +24,10 @@ public class RadialMenuCreate
 
         for(int i = 1; i <= count; i++)
         {
-            var obj = GameObject.Instantiate(_radialMenuView.Prefab, _radialMenuView.transform);
-            obj.AddComponent<Image>().sprite = radialMenuSO.Items[i - 1].ItemSprite;
-            obj.AddComponent<Button>();
+            var obj = GameObject.Instantiate(_radialMenuView.Prefab, _radialMenuView.RadialMenuImageTransform);
+            obj.GetComponent<Image>().sprite = radialMenuSO.Items[i - 1].ItemSprite;
+            obj.GetComponent<RadialMenuItemView>().ItemMenu = radialMenuSO.Items[i - 1];
+            _radialMenuItemClick.Subscribe(obj.GetComponent<RadialMenuItemView>());
             _items.Add(obj);
 
             var transform = obj.GetComponent<Transform>();

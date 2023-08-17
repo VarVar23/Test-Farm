@@ -1,11 +1,20 @@
+using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ClickGardenView : MonoBehaviour, IClickMenu
 {
     [SerializeField] private RadialMenuSO _radialMenuSO;
-    [SerializeField] private Button _clickButton;
 
     public RadialMenuSO RadialMenuSO => _radialMenuSO;
-    public Button ClickButton => _clickButton;
+    public Action<RadialMenuSO, Transform> ClickAction { get => _clickAction; set => _clickAction = value; }
+    public bool OneClick { get => _oneClick; set => _oneClick = value; }
+
+    private Action<RadialMenuSO, Transform> _clickAction;
+    private bool _oneClick = true;
+
+    private void OnMouseDown()
+    {
+        if(_oneClick)
+            _clickAction?.Invoke(_radialMenuSO, transform);
+    }
 }
